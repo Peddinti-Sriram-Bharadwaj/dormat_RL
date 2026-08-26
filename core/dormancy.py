@@ -1,13 +1,13 @@
 import torch
 from typing import List, Tuple, Dict
 
-def calculate_dormancy_scores(preactivations: List[torch.Tensor], tau: float = 0.025) -> Tuple[List[torch.Tensor], List[float]]:
+def calculate_dormancy_scores(activations: List[torch.Tensor], tau: float = 0.025) -> Tuple[List[torch.Tensor], List[float]]:
     """
     Calculates the dormancy scores for each neuron in each layer.
     
     Args:
-        preactivations: A list of tensors, each of shape (batch_size, hidden_dim),
-            representing the pre-activation outputs for each layer.
+        activations: A list of tensors, each of shape (batch_size, hidden_dim),
+            representing the post-activation outputs for each layer.
         tau: The threshold below which a neuron is considered dormant.
         
     Returns:
@@ -19,7 +19,7 @@ def calculate_dormancy_scores(preactivations: List[torch.Tensor], tau: float = 0
     dormant_indices = []
     dormant_percentages = []
     
-    for layer_acts in preactivations:
+    for layer_acts in activations:
         # layer_acts is (batch_size, hidden_dim)
         # Calculate mean absolute activation per neuron: E_x |h_i(x)|
         mean_abs_acts = torch.mean(torch.abs(layer_acts), dim=0) # Shape: (hidden_dim,)

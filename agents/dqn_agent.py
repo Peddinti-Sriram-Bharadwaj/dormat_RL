@@ -125,9 +125,9 @@ class DQNAgent:
         states = torch.FloatTensor(states).to(self.device)
         
         with torch.no_grad():
-            _, preactivations = self.network(states, return_preactivations=True)
+            _, activations = self.network(states, return_activations=True)
             
-        dormant_indices, percentages = calculate_dormancy_scores(preactivations, dormancy_tau)
+        dormant_indices, percentages = calculate_dormancy_scores(activations, dormancy_tau)
         
         if redo:
             recycle_dormant_neurons(self.network, dormant_indices)

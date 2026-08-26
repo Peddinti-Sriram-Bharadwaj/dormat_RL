@@ -19,23 +19,23 @@ class MLP(nn.Module):
         # Output layer
         self.output_layer = nn.Linear(in_dim, output_dim)
         
-    def forward(self, x: torch.Tensor, return_preactivations: bool = False):
+    def forward(self, x: torch.Tensor, return_activations: bool = False):
         """
         Forward pass.
-        If return_preactivations is True, returns (output, preactivations)
-        where preactivations is a list of tensors containing the pre-activation 
+        If return_activations is True, returns (output, activations)
+        where activations is a list of tensors containing the post-activation 
         outputs of each hidden layer.
         """
-        preactivations = []
+        activations = []
         out = x
         for layer in self.layers:
             out = layer(out)
-            if return_preactivations:
-                preactivations.append(out)
             out = F.relu(out)
+            if return_activations:
+                activations.append(out)
             
         out = self.output_layer(out)
         
-        if return_preactivations:
-            return out, preactivations
+        if return_activations:
+            return out, activations
         return out
