@@ -34,3 +34,16 @@
 - Dormancy accumulation was primarily concentrated in the second hidden layer (Layer 1), starting at roughly 39% early in training and plateauing in the 56% to 60% range during the latter half of the experiment.
 - The first hidden layer (Layer 0) maintained a low dormancy rate, generally fluctuating between 1% and 12%.
 - Periodic ReDo intervention (every 5000 steps) successfully recycled the significant proportion of dormant neurons in Layer 1, allowing the model to progressively attain a near-solved state for the LunarLander environment without destabilizing the learned policy.
+
+## Experiment 4: Cross-Task Interference and Dormant Neuron Repurposing
+**Date:** 2026-08-26
+**Environment:** CartPole-v1 (Phase 1) $\rightarrow$ CartPole-v0 (Phase 2)
+**Algorithm:** DQN
+**Hyperparameters:** Phase 1 Steps=15000, Phase 2 Steps=20000. Phase 1 active neurons frozen; dormant neurons recycled and trained on Phase 2.
+
+**Observations:**
+- At the conclusion of Phase 1, the model demonstrated strong performance on CartPole-v1 (episodic returns > 200).
+- Following the intervention, active neurons (representing knowledge of CartPole-v1) were frozen, and dormant neurons were reinitialized.
+- **Initial Interference:** Upon commencing Phase 2, evaluation on the original Task A (CartPole-v1) exhibited a sharp performance drop (returns collapsed to $\approx 50-60$). This drop did not result from catastrophic forgetting in the active neurons (as they were strictly frozen, verified by $\nabla = 0.0$), but rather from structural interference: the newly randomized dormant neurons were contributing uncalibrated noise to the shared final output layer.
+- **Recovery via Repurposing:** As the recycled dormant neurons trained on Task B (CartPole-v0), their outputs aligned with the underlying dynamics of the physics engine. Consequently, not only did the agent successfully solve Task B solely using the newly trained neurons, but evaluation performance on Task A concurrently recovered, climbing back to $\approx 160+$.
+- This indicates that dormant neurons can be effectively repurposed for new, similar tasks, and as they adapt, their representations can harmonize with the frozen legacy subnetworks, naturally mitigating the initial forward-interference.

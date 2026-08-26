@@ -18,7 +18,23 @@ def parse_args():
     
     return parser.parse_args()
 
-def train_phase(agent, env_id, total_steps, phase_name):
+def evaluate_agent(agent, env_id, num_episodes=5):
+    env = gym.make(env_id)
+    total_reward = 0
+    
+    for _ in range(num_episodes):
+        state, _ = env.reset()
+        done = False
+        while not done:
+            action = agent.select_action(state, epsilon=0.0)
+            state, reward, terminated, truncated, _ = env.step(action)
+            total_reward += reward
+            done = terminated or truncated
+            
+    env.close()
+    return total_reward / num_episodes
+
+def train_phase(agent, env_id, total_steps, phase_name, eval_env_id=None, eval_freq=10):
     env = gym.make(env_id)
     state, _ = env.reset()
     
@@ -48,15 +64,10 @@ def train_phase(agent, env_id, total_steps, phase_name):
             if episode_count % 10 == 0:
                 print(f"{phase_name} | Step {step} | Episode {episode_count} | Reward {episode_reward}")
                 
-                # If we are in Phase 2, let's verify that active neurons aren't getting updated
-                # by checking if their gradient is 0. (Just a quick debug print occasionally)
-                if phase_name == "Phase 2" and episode_count % 50 == 0:
-                    # Look at the first layer's grad
-                    if agent.network.layers[0].weight.grad is not None:
-                        grad = agent.network.layers[0].weight.grad
-                        # Since some are active and some dormant, min/max of grad absolute values
-                        print(f"    [Grad check] Layer 0 weight grad max: {grad.abs().max().item():.6f}, min: {grad.abs().min().item():.6f}")
-                        
+            if eval_env_id is not None and episode_count % eval_freq == 0:
+                eval_reward = evaluate_agent(agent, eval_env_id)
+                print(f"    [Eval] Performance on {eval_env_id}: {eval_reward:.1f}")
+                
             episode_reward = 0
             
     env.close()
@@ -89,7 +100,7 @@ def main():
     # We clear the replay buffer so it doesn't train on Phase 1 data
     agent.memory.buffer.clear()
     
-    train_phase(agent, args.env_b, args.phase2_steps, "Phase 2")
+    train_phase(agent, args.env_b, args.phase2_steps, "Phase 2", eval_env_id=args.env_a, eval_freq=10)
     
     print("\nExperiment Finished.")
 
