@@ -9,6 +9,7 @@ from typing import Tuple, Dict, Any, List
 from core.network import MLP
 from core.dormancy import calculate_dormancy_scores
 from core.redo import recycle_dormant_neurons
+from core.freeze import freeze_active_neurons
 
 class ReplayBuffer:
     def __init__(self, capacity: int):
@@ -141,4 +142,36 @@ class DQNAgent:
             # We will just do a hard copy for the affected weights, but simplest is to just copy the whole layer if we reset.
             # We'll just let the target network follow via soft updates.
             
+        return percentages
+
+    def freeze_active_neurons_and_reset_dormant(self, dormancy_tau: float = 0.025):
+        """
+        Identifies dormant neurons, randomizes their incoming weights (to give them capacity),
+        and freezes all other (active) neurons using gradient hooks.
+        """
+        if len(self.memory) < self.batch_size:
+            print("Not enough data to evaluate dormancy.")
+            return
+
+        states, _, _, _, _ = self.memory.sample(self.batch_size)
+        states = torch.FloatTensor(states).to(self.device)
+        
+        with torch.no_grad():
+            _, activations = self.network(states, return_activations=True)
+            
+        dormant_indices, percentages = calculate_dormancy_scores(activations, dormancy_tau)
+        
+        # 1. Randomize incoming weights of dormant neurons (we don't zero outgoing because we want them to learn from scratch)
+        # We can just use the reset_linear_layer_weights logic from redo.py, but without zeroing outgoing
+        from core.redo import reset_linear_layer_weights
+        with torch.no_grad():
+            for layer, is_dormant in zip(self.network.layers, dormant_indices):
+                reset_linear_layer_weights(layer, is_dormant)
+                
+        # 2. Freeze active neurons
+        self.hooks = freeze_active_neurons(self.network, dormant_indices)
+        
+        # 3. Sync target network
+        self.target_network.load_state_dict(self.network.state_dict())
+        
         return percentages
