@@ -47,3 +47,16 @@
 - **Initial Interference:** Upon commencing Phase 2, evaluation on the original Task A (CartPole-v1) exhibited a sharp performance drop (returns collapsed to $\approx 50-60$). This drop did not result from catastrophic forgetting in the active neurons (as they were strictly frozen, verified by $\nabla = 0.0$), but rather from structural interference: the newly randomized dormant neurons were contributing uncalibrated noise to the shared final output layer.
 - **Recovery via Repurposing:** As the recycled dormant neurons trained on Task B (CartPole-v0), their outputs aligned with the underlying dynamics of the physics engine. Consequently, not only did the agent successfully solve Task B solely using the newly trained neurons, but evaluation performance on Task A concurrently recovered, climbing back to $\approx 160+$.
 - This indicates that dormant neurons can be effectively repurposed for new, similar tasks, and as they adapt, their representations can harmonize with the frozen legacy subnetworks, naturally mitigating the initial forward-interference.
+
+## Experiment 5: Radically Different Cross-Task Transfer (CartPole to Acrobot)
+**Date:** 2026-08-26
+**Environment:** CartPole-v1 (Phase 1) $\rightarrow$ Acrobot-v1 (Phase 2)
+**Algorithm:** DQN
+**Hyperparameters:** Phase 1 Steps=15000, Phase 2 Steps=30000. State space zero-padded to dim=8, action space padded to dim=4 to allow architectural continuity. Phase 1 active neurons frozen.
+
+**Observations:**
+- **Zero-Padding Mechanism:** The `PadEnvWrapper` successfully allowed a single neural network architecture to interact with two structurally incompatible environments by standardizing their dimensions.
+- **Phase 1 Convergence:** The network reached near-perfect episodic returns ($>250$) on `CartPole-v1` before intervention, accumulating significant dormancy ($\approx 58\%$ in Layer 1). 
+- **Phase 2 Learning:** The recycled dormant neurons were able to successfully learn features for `Acrobot-v1` despite the active network being entirely locked, improving returns from a baseline of $\approx -459$ up to $-123$.
+- **Destructive Forward Interference:** Unlike the structurally similar CartPole-v0 experiment, the evaluation of the frozen CartPole-v1 network collapsed entirely (episodic returns dropping as low as $\approx 9.2$) and *did not recover*. 
+- **Conclusion:** While dormant neurons can successfully learn a radically different task, their representations become increasingly misaligned with the original task's frozen network. Because both subnetworks share an output layer, the dormant neurons' specialized adaptations for Acrobot act as highly destructive, irrecoverable noise (forward interference) on the legacy CartPole predictions.

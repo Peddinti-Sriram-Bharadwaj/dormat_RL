@@ -5,11 +5,12 @@ import argparse
 import time
 
 from agents.dqn_agent import DQNAgent
+from core.env_wrapper import PadEnvWrapper
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Freeze Active Neurons Experiment")
     parser.add_argument("--env_a", type=str, default="CartPole-v1", help="Phase 1 env")
-    parser.add_argument("--env_b", type=str, default="CartPole-v0", help="Phase 2 env")
+    parser.add_argument("--env_b", type=str, default="Acrobot-v1", help="Phase 2 env")
     parser.add_argument("--phase1_steps", type=int, default=20000, help="Steps for Phase 1")
     parser.add_argument("--phase2_steps", type=int, default=30000, help="Steps for Phase 2")
     parser.add_argument("--replay_ratio", type=float, default=0.25, help="Replay ratio")
@@ -20,6 +21,7 @@ def parse_args():
 
 def evaluate_agent(agent, env_id, num_episodes=5):
     env = gym.make(env_id)
+    env = PadEnvWrapper(env, max_state_dim=8, max_action_dim=4)
     total_reward = 0
     
     for _ in range(num_episodes):
@@ -36,6 +38,7 @@ def evaluate_agent(agent, env_id, num_episodes=5):
 
 def train_phase(agent, env_id, total_steps, phase_name, eval_env_id=None, eval_freq=10):
     env = gym.make(env_id)
+    env = PadEnvWrapper(env, max_state_dim=8, max_action_dim=4)
     state, _ = env.reset()
     
     epsilon_start = 1.0 if phase_name == "Phase 1" else 0.5
@@ -77,6 +80,7 @@ def main():
     
     # Init environment just to get dimensions
     env = gym.make(args.env_a)
+    env = PadEnvWrapper(env, max_state_dim=8, max_action_dim=4)
     state_dim = env.observation_space.shape[0]
     action_dim = env.action_space.n
     env.close()
