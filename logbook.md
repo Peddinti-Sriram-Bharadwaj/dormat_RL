@@ -60,3 +60,16 @@
 - **Phase 2 Learning:** The recycled dormant neurons were able to successfully learn features for `Acrobot-v1` despite the active network being entirely locked, improving returns from a baseline of $\approx -459$ up to $-123$.
 - **Destructive Forward Interference:** Unlike the structurally similar CartPole-v0 experiment, the evaluation of the frozen CartPole-v1 network collapsed entirely (episodic returns dropping as low as $\approx 9.2$) and *did not recover*. 
 - **Conclusion:** While dormant neurons can successfully learn a radically different task, their representations become increasingly misaligned with the original task's frozen network. Because both subnetworks share an output layer, the dormant neurons' specialized adaptations for Acrobot act as highly destructive, irrecoverable noise (forward interference) on the legacy CartPole predictions.
+
+## Experiment 6: Network Width Ablation Study for Cross-Task Transfer
+**Date:** 2026-08-26
+**Environment:** CartPole-v1 (Phase 1) $\rightarrow$ Acrobot-v1 (Phase 2)
+**Algorithm:** DQN
+**Hyperparameters:** Widths $\in \{64, 128, 256, 512\}$. Phase 1 Steps=15000, Phase 2 Steps=30000. Zero-padding enabled.
+
+**Observations:**
+- We investigated if scaling up the network width provides sufficient dormant capacity to absorb the second task without causing massive forward interference to the frozen active neurons representing the first task.
+- **Dormancy Scaling:** As expected, wider networks consistently yielded higher percentages of dormant neurons prior to the intervention (Width 64: $45.3\% \rightarrow$ Width 512: $63.6\%$).
+- **The "Goldilocks" Zone (Width=256):** At a width of 256, the agent demonstrated the most balanced performance. The recycled dormant neurons successfully drove Acrobot-v1 performance to $-218.9$ (Task B), while CartPole-v1 performance (Task A) showed an extraordinary recovery, settling at $213.2$.
+- **Over-parameterization Collapse (Width=512):** The widest network achieved the absolute best performance on the new task (Task B returned $-141.0$). However, the evaluation on Task A was almost entirely destroyed (recovering to only $41.6$).
+- **Conclusion:** While increasing network width provides a larger absolute reservoir of dormant neurons (which strictly benefits learning the *new* task), there is a critical threshold. If the dormant subnetwork becomes *too* expressive, its unconstrained learning on Task B creates so much variation in the shared output layer that it irreparably corrupts the predictions for Task A, exacerbating the cross-task interference.
