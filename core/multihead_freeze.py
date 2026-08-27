@@ -1,26 +1,14 @@
 import torch
-import torch.nn as nn
 from typing import List
 
-def freeze_active_neurons(network, dormant_indices: List[torch.Tensor]):
+def multihead_freeze_active_neurons(network, dormant_indices: List[torch.Tensor]):
     """
     Freezes the active (non-dormant) neurons by registering backward hooks
-    that zero out their gradients.
-    
-    Args:
-        network: The MLP network.
-        dormant_indices: A list of boolean tensors indicating dormant neurons for each hidden layer.
-                         Active neurons are ~dormant_indices.
+    that zero out their gradients. Works for MultiHeadMLP.
     """
     hooks = []
     
     def get_weight_hook(active_mask, dim):
-        """
-        Returns a hook function that zeroes out gradients along the specified dimension
-        for the active neurons.
-        dim=0 corresponds to the output dimension (incoming weights of the neuron).
-        dim=1 corresponds to the input dimension (outgoing weights of the neuron).
-        """
         def hook(grad):
             new_grad = grad.clone()
             if dim == 0:
@@ -49,11 +37,12 @@ def freeze_active_neurons(network, dormant_indices: List[torch.Tensor]):
             
         # Freeze outgoing weights from active neurons
         if i + 1 < len(network.layers):
-            next_layer = network.layers[i + 1]
+            next_layers = [network.layers[i + 1]]
         else:
-            next_layer = network.output_layer
+            next_layers = network.output_layers
             
-        h_out = next_layer.weight.register_hook(get_weight_hook(is_active, dim=1))
-        hooks.append(h_out)
+        for next_layer in next_layers:
+            h_out = next_layer.weight.register_hook(get_weight_hook(is_active, dim=1))
+            hooks.append(h_out)
         
     return hooks

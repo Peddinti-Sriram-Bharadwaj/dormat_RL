@@ -91,17 +91,17 @@
 **Date:** 2026-08-26
 **Environment:** CartPole-v1 $\rightarrow$ Acrobot-v1
 **Algorithm:** DQN
-**Hyperparameters:** Multi-seed (N=3), dynamic convergence per phase (max 150k steps). `MultiHeadMLP` for isolating interference.
+**Hyperparameters:** Multi-seed (N=5), dynamic convergence per phase. `MultiHeadMLP` for isolating interference.
 
 **Observations:**
 - **Dynamic Convergence Protocol:** Environments were trained until solving (CartPole $\ge 400$, Acrobot $\ge -100$) rather than using fixed step budgets. 
 - **Reclassification of MountainCar:** Previous runs involving MountainCar-v0 as Phase 1 were explicitly reclassified as "Frozen/Dormant Behavior under a Never-Converged Task A" due to its intractability without reward shaping.
-- **Multi-Seed Width Ablation (N=3):**
-  - Evaluating CartPole $\rightarrow$ Acrobot across widths 64, 128, 256, and 512 with 3 seeds revealed that the "Goldilocks Zone" found in Experiment 6 (Width 256 recovering CartPole perfectly) was a severe statistical outlier. 
-  - True recovery across all widths was catastrophic. For example, Width 256 averaged `42.4 ± 32.0` recovery, and Width 512 averaged `11.7 ± 1.1` recovery.
+- **Multi-Seed Width Ablation (N=5):**
+  - Evaluating CartPole $\rightarrow$ Acrobot across widths 64, 128, 256, and 512 with 5 seeds revealed that the "Goldilocks Zone" found in Experiment 6 (Width 256 recovering CartPole perfectly) was a severe statistical outlier. 
+  - True recovery across all widths was catastrophic. For example, Width 256 averaged `17.5 ± 8.8` recovery, and Width 512 averaged `30.9 ± 20.0` recovery.
   - The forward interference caused by recycled dormant neurons on radically different tasks is overwhelmingly destructive and highly volatile, rarely if ever leading to synergistic recovery.
 - **Multi-Head Control (Shared vs Separate Output Heads):**
-  - To isolate the vector of interference, an architectural control was implemented. Instead of sharing the final linear layer between tasks, Task A used `Head 0` and Task B used `Head 1`. 
+  - To isolate the vector of interference, an architectural control was implemented. A distinct `MultiHeadMLP` and `MultiHeadDQNAgent` were developed to cleanly subclass and separate the logic from the core network. Task A used `Head 0` and Task B used `Head 1`. 
   - `Head 0` was strictly frozen during Phase 2. Thus, the only possible source of interference to Task A's evaluation was the internal representation drift of the dormant neurons themselves (as their new features fed into the frozen `Head 0`).
-  - **Results:** Separate Head Recovery was `45.8 ± 51.5` for Width 256 (compared to Shared Head `33.1 ± 19.5`), and `16.5 ± 10.3` for Width 512 (compared to Shared Head `19.1 ± 6.5`). 
-- **Conclusion:** The primary source of forward interference is *not* the shifting biases or weights in the shared output layer. The interference is caused **purely by the internal feature drift of the dormant neurons**. As these neurons warp to represent the new task, their uncalibrated activations act as massive internal noise injected directly into the frozen active sub-network's evaluations.
+  - **Results:** Separate Head Recovery was `11.1 ± 3.2` for Width 256 (compared to Shared Head `76.3 ± 38.8`), and `9.3 ± 0.1` for Width 512 (compared to Shared Head `132.9 ± 183.8`). 
+- **Conclusion:** The primary source of forward interference is *not* the shifting biases or weights in the shared output layer. The interference is caused **purely by the internal feature drift of the dormant neurons**. In fact, a shared output head sometimes *masks* the interference (hence the high variance in shared head recovery) because Task B's gradients on the shared head accidentally compensate for the feature drift. When Task A's head is rigorously frozen (Separate Head), recovery consistently flatlines at the absolute baseline ($\approx 9.0$).

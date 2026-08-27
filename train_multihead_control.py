@@ -4,11 +4,11 @@ import numpy as np
 from collections import deque
 import copy
 
-from agents.dqn_agent import DQNAgent
+from agents.multihead_agent import MultiHeadDQNAgent
 from core.env_wrapper import PadEnvWrapper
 from train_width_ablation import train_phase, evaluate_agent, get_threshold
 
-def run_multihead_experiment(width, num_seeds=3):
+def run_multihead_experiment(width, num_seeds=5):
     print(f"\n=========================================")
     print(f"Testing Network Width: {width} (N={num_seeds} seeds)")
     print(f"=========================================")
@@ -26,7 +26,7 @@ def run_multihead_experiment(width, num_seeds=3):
         torch.manual_seed(seed)
         np.random.seed(seed)
         
-        agent = DQNAgent(
+        agent = MultiHeadDQNAgent(
             state_dim=8,
             action_dim=4,
             hidden_dims=[width, width],
@@ -103,7 +103,7 @@ def main():
     widths = [256, 512]
     
     for w in widths:
-        shared, sep = run_multihead_experiment(w, num_seeds=3)
+        shared, sep = run_multihead_experiment(w, num_seeds=5)
         print(f"\n--- SUMMARY FOR WIDTH {w} ---")
         print(f"Shared Head Recovery:   {np.mean(shared):.1f} ± {np.std(shared):.1f}")
         print(f"Separate Head Recovery: {np.mean(sep):.1f} ± {np.std(sep):.1f}")

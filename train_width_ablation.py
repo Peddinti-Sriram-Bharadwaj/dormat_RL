@@ -12,7 +12,7 @@ def parse_args():
     parser.add_argument("--env_a", type=str, default="CartPole-v1", help="Phase 1 env")
     parser.add_argument("--env_b", type=str, default="Acrobot-v1", help="Phase 2 env")
     parser.add_argument("--max_steps", type=int, default=150000, help="Max steps per phase")
-    parser.add_argument("--num_seeds", type=int, default=3, help="Number of random seeds")
+    parser.add_argument("--num_seeds", type=int, default=5, help="Number of random seeds")
     parser.add_argument("--replay_ratio", type=float, default=0.25, help="Replay ratio")
     parser.add_argument("--dormancy_tau", type=float, default=0.025, help="Threshold")
     parser.add_argument("--device", type=str, default="cpu")
@@ -139,8 +139,7 @@ def main():
                 action_dim=action_dim,
                 hidden_dims=[width, width],
                 replay_ratio=args.replay_ratio,
-                device=args.device,
-                num_heads=1
+                device=args.device
             )
             
             # Phase 1
