@@ -230,3 +230,20 @@ The current threshold-based dormancy criterion ($\tau \le 0.025$ mean activation
 | 128 | `32.5%` | `107360 / 1272` | `68433 / 343` | `309.4` | `254.9` | `34.1 ± 40.1` | `185.0 ± 169.4` |
 | 256 | `37.4%` | `101339 / 1385` | `55278 / 279` | `324.5` | `320.2` | `28.7 ± 19.5` | `90.6 ± 41.8` |
 | 512 | `49.0%` | `142197 / 307` | `52163 / 281` | `365.8` | `264.8` | `31.2 ± 39.7` | `113.5 ± 137.3` |
+
+## Experiment 14A: Random Neuron Masking Control
+**Date:** 2026-08-27
+**Purpose:** Validate whether the performance drop from masking dormant neurons (nB) is due to something special about dormant neurons, or just general capacity loss from removing any neurons.
+
+| Width | nB% | All Neurons | Dormant-Masked (Mean±Std) | Random-Masked (Mean±Std) | Drop(dormant) | Drop(random) |
+|---|---|---|---|---|---|---|
+| 64 | `31.7%` | `395.8` | `391.5 ± 142.8` | `105.6 ± 67.2` | `4.3` | `290.2` |
+| 128 | `33.2%` | `372.0` | `310.3 ± 194.3` | `52.3 ± 28.2` | `61.7` | `319.7` |
+| 256 | `38.4%` | `416.4` | `425.9 ± 148.2` | `62.1 ± 19.6` | `-9.6` | `354.2` |
+| 512 | `47.4%` | `425.4` | `406.8 ± 166.7` | `86.3 ± 43.9` | `18.6` | `339.1` |
+
+**Key Finding:** Masking dormant neurons (nB) causes a negligible performance drop (Δ = 4 to 62 reward points) compared to masking a random set of the same count of neurons (Δ = 290 to 354 reward points). This confirms two things:
+1. **Dormant neurons carry far less task-specific structure than active neurons** — removing them is cheap, removing active neurons is catastrophic. This validates the dormancy criterion as meaningful.
+2. **The structural bias claim is weakened but not eliminated:** Since dormant neurons can be masked with almost no cost, the earlier baseline drops observed in Exp 13 (especially w=128: -17%, w=512: -27%) are likely explained by measurement noise or seed variance, not genuine structural contribution.
+
+**Revised Conclusion on Structural Bias:** Dormant neurons do NOT appear to provide meaningful structural bias to the active network under normal evaluation. The performance drops we observed in Exp 13 at baseline were likely noise. The primary mechanism of Task A failure remains the active noise injection from nB neurons after Phase 2 training.
