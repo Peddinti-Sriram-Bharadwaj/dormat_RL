@@ -178,3 +178,55 @@ The following table summarizes all our rigorous, dynamically-converged experimen
 | nA-only masked ($n_B = 0$) | `349.1` | `198.0 ± 113.2` |
 
 **Interpretation:** If `nA-only masked` collapses even at baseline (before Phase 2), this directly confirms that the dormant neurons ($n_B$) were providing a distributed structural bias to $n_A$ even during Task A training. Removing them breaks the network's internal geometric representation of Task A.
+
+## Future Direction: Refined Neuron Dormancy Taxonomy
+
+**Date:** 2026-08-27
+
+The current threshold-based dormancy criterion ($\tau \le 0.025$ mean activation across a batch) treats all low-activation neurons identically. A finer-grained taxonomy may be warranted:
+
+- **Globally Dormant:** Produces no meaningful response anywhere in the relevant input distribution. Safe to recycle without consequence under all conditions.
+- **Distributionally Dormant:** Usually inactive, but critical for rare or edge-case inputs. Recycling these neurons would cause failures only on rare scenarios — catastrophic but difficult to detect during standard evaluation.
+- **Functionally Redundant:** Fully active and responsive, but removable because other neurons in the layer compensate via weight adjustment. These are candidates for pruning, not recycling.
+
+**Why This Matters:** Our current ReDo criterion cannot distinguish between globally dormant and distributionally dormant neurons. The "structural bias" we observed in Experiment 11 may be partially explained by distributionally dormant neurons that fire rarely but are load-bearing for certain CartPole edge cases (e.g., high-angle recovery). Masking them out disproportionately hurts performance on those rare inputs.
+
+**Proposed Future Experiment:** Measure dormancy not on a single batch but across the full input distribution (or multiple diverse rollouts) and classify neurons into the three categories above before recycling.
+## Experiment 12: Width-Varied Speed Comparison Grid
+**Date:** 2026-08-27 | **Seeds:** 5 | **MountainCar:** velocity reward shaping
+
+| Width | Task A | Task B | Recycled Steps (Mean±Std) | Scratch Steps (Mean±Std) | Δ Steps |
+|---|---|---|---|---|---|
+| 64 | CartPole-v1 | Acrobot-v1 | `72924 ± 9394`  | `64346 ± 4810` | **-8578** |
+| 64 | CartPole-v1 | MountainCar-v0 | `40640 ± 55102`  | `19280 ± 7246` | **-21360** |
+| 64 | Acrobot-v1 | CartPole-v1 | `150000 ± 0` (DNF) | `136363 ± 11202` | **-13637** |
+| 64 | Acrobot-v1 | MountainCar-v0 | `68120 ± 44901`  | `18480 ± 2685` | **-49640** |
+| 64 | MountainCar-v0 | CartPole-v1 | `83844 ± 57606`  | `136360 ± 15035` | **+52516** |
+| 64 | MountainCar-v0 | Acrobot-v1 | `66650 ± 15120`  | `61214 ± 5782` | **-5436** |
+| 128 | CartPole-v1 | Acrobot-v1 | `55053 ± 5891`  | `56436 ± 3186` | **+1383** |
+| 128 | CartPole-v1 | MountainCar-v0 | `13680 ± 5877`  | `13720 ± 3166` | **+40** |
+| 128 | Acrobot-v1 | CartPole-v1 | `142761 ± 14478`  | `107953 ± 5771` | **-34808** |
+| 128 | Acrobot-v1 | MountainCar-v0 | `17560 ± 10000`  | `14200 ± 1829` | **-3360** |
+| 128 | MountainCar-v0 | CartPole-v1 | `146181 ± 4769`  | `112149 ± 9481` | **-34032** |
+| 128 | MountainCar-v0 | Acrobot-v1 | `48333 ± 7412`  | `58548 ± 5032` | **+10215** |
+| 256 | CartPole-v1 | Acrobot-v1 | `57568 ± 9066`  | `57720 ± 3322` | **+153** |
+| 256 | CartPole-v1 | MountainCar-v0 | `7640 ± 3660`  | `9440 ± 1353` | **+1800** |
+| 256 | Acrobot-v1 | CartPole-v1 | `107304 ± 48009`  | `94083 ± 21537` | **-13221** |
+| 256 | Acrobot-v1 | MountainCar-v0 | `9680 ± 3798`  | `9880 ± 2293` | **+200** |
+| 256 | MountainCar-v0 | CartPole-v1 | `111278 ± 23104`  | `91429 ± 7226` | **-19849** |
+| 256 | MountainCar-v0 | Acrobot-v1 | `54013 ± 6989`  | `58158 ± 4226` | **+4145** |
+| 512 | CartPole-v1 | Acrobot-v1 | `53953 ± 1801`  | `57542 ± 893` | **+3590** |
+| 512 | CartPole-v1 | MountainCar-v0 | `4840 ± 1541`  | `7360 ± 833` | **+2520** |
+| 512 | Acrobot-v1 | CartPole-v1 | `146916 ± 6168`  | `119564 ± 26471` | **-27352** |
+| 512 | Acrobot-v1 | MountainCar-v0 | `6160 ± 1261`  | `6880 ± 776` | **+720** |
+| 512 | MountainCar-v0 | CartPole-v1 | `109184 ± 11477`  | `124162 ± 23040` | **+14978** |
+| 512 | MountainCar-v0 | Acrobot-v1 | `50247 ± 2307`  | `59626 ± 4334` | **+9379** |
+## Experiment 13: Width-Varied Activation Masking (nA-Only Evaluation)
+**Date:** 2026-08-27 | **Task A:** CartPole-v1 → **Task B:** Acrobot-v1 | **Seeds:** 5
+
+| Width | Dormancy (nB%) | P1 Conv (steps/ep) | P2 Conv (steps/ep) | Baseline All | Baseline Masked | Final All | Final Masked |
+|---|---|---|---|---|---|---|---|
+| 64 | `30.3%` | `143057 / 786` | `89269 / 463` | `471.8` | `470.7` | `9.6 ± 0.2` | `316.6 ± 157.9` |
+| 128 | `32.5%` | `107360 / 1272` | `68433 / 343` | `309.4` | `254.9` | `34.1 ± 40.1` | `185.0 ± 169.4` |
+| 256 | `37.4%` | `101339 / 1385` | `55278 / 279` | `324.5` | `320.2` | `28.7 ± 19.5` | `90.6 ± 41.8` |
+| 512 | `49.0%` | `142197 / 307` | `52163 / 281` | `365.8` | `264.8` | `31.2 ± 39.7` | `113.5 ± 137.3` |
