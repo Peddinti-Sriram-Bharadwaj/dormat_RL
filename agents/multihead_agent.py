@@ -98,6 +98,9 @@ class MultiHeadDQNAgent(DQNAgent):
             
         dormant_indices, percentages = calculate_dormancy_scores(activations, dormancy_tau)
         
+        # Store the active masks (nA) for use in masked evaluation (Experiment 11)
+        self.active_masks = [~is_dormant for is_dormant in dormant_indices]
+        
         from core.redo import reset_linear_layer_weights
         with torch.no_grad():
             for layer, is_dormant in zip(self.network.layers, dormant_indices):
@@ -108,3 +111,35 @@ class MultiHeadDQNAgent(DQNAgent):
         self.target_network.load_state_dict(self.network.state_dict())
         
         return percentages
+
+    def evaluate_masked(self, env_id: str, head_idx: int = 0, n_episodes: int = 10) -> float:
+        """
+        Evaluates Task A performance using ONLY nA neurons.
+        All nB (recycled dormant) neuron activations are zeroed out
+        at every hidden layer during the forward pass.
+        """
+        import gymnasium as gym
+        from core.env_wrapper import PadEnvWrapper
+
+        assert hasattr(self, 'active_masks'), "Must call freeze_active_neurons_and_reset_dormant first."
+
+        env = gym.make(env_id)
+        env = PadEnvWrapper(env, max_state_dim=8, max_action_dim=4)
+        total_reward = 0.0
+
+        for _ in range(n_episodes):
+            state, _ = env.reset()
+            done = False
+            ep_reward = 0.0
+            while not done:
+                with torch.no_grad():
+                    state_t = torch.FloatTensor(state).unsqueeze(0).to(self.device)
+                    q_values = self.network.forward_masked(state_t, self.active_masks, head_idx=head_idx)
+                action = q_values.argmax(dim=1).item()
+                state, reward, terminated, truncated, _ = env.step(action)
+                ep_reward += reward
+                done = terminated or truncated
+            total_reward += ep_reward
+
+        env.close()
+        return total_reward / n_episodes

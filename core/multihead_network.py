@@ -40,3 +40,22 @@ class MultiHeadMLP(nn.Module):
         if return_activations:
             return out, activations
         return out
+
+    def forward_masked(self, x: torch.Tensor, active_masks: List[torch.Tensor], head_idx: int = 0):
+        """
+        Forward pass using ONLY nA neurons (active Task A neurons).
+        The activations of all dormant/recycled neurons (nB) are zeroed out
+        at every hidden layer before being passed to the next layer.
+        
+        active_masks: list of boolean tensors (one per hidden layer), where True
+                      indicates a neuron was active (part of nA) during Task A.
+        """
+        out = x
+        for layer, active_mask in zip(self.layers, active_masks):
+            out = layer(out)
+            out = F.relu(out)
+            # Zero out all nB neuron activations — only nA neurons contribute
+            out = out * active_mask.float().to(out.device)
+            
+        out = self.output_layers[head_idx](out)
+        return out
