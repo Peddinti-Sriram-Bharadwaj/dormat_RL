@@ -49,11 +49,12 @@ def freeze_active_neurons(network, dormant_indices: List[torch.Tensor]):
             
         # Freeze outgoing weights from active neurons
         if i + 1 < len(network.layers):
-            next_layer = network.layers[i + 1]
+            next_layers = [network.layers[i + 1]]
         else:
-            next_layer = network.output_layer
+            next_layers = network.output_layers
             
-        h_out = next_layer.weight.register_hook(get_weight_hook(is_active, dim=1))
-        hooks.append(h_out)
+        for next_layer in next_layers:
+            h_out = next_layer.weight.register_hook(get_weight_hook(is_active, dim=1))
+            hooks.append(h_out)
         
     return hooks

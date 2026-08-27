@@ -54,9 +54,10 @@ class DQNAgent:
         self.batch_size = batch_size
         self.replay_ratio = replay_ratio
         self.device = torch.device(device)
+        self.current_head = 0
         
-        self.network = MLP(state_dim, action_dim, hidden_dims).to(self.device)
-        self.target_network = MLP(state_dim, action_dim, hidden_dims).to(self.device)
+        self.network = MLP(state_dim, action_dim, hidden_dims, num_heads=kwargs.get("num_heads", 1)).to(self.device)
+        self.target_network = MLP(state_dim, action_dim, hidden_dims, num_heads=kwargs.get("num_heads", 1)).to(self.device)
         self.target_network.load_state_dict(self.network.state_dict())
         
         self.optimizer = optim.Adam(self.network.parameters(), lr=lr)
@@ -64,14 +65,20 @@ class DQNAgent:
         
         # We track how many updates we owe based on the replay ratio
         self.updates_owed = 0.0
+        
+    def set_head(self, head_idx: int):
+        self.current_head = head_idx
 
-    def select_action(self, state: np.ndarray, epsilon: float = 0.0) -> int:
+    def select_action(self, state: np.ndarray, epsilon: float = 0.0, head_idx: int = None) -> int:
+        if head_idx is None:
+            head_idx = self.current_head
+            
         if random.random() < epsilon:
             return random.randint(0, self.action_dim - 1)
             
         with torch.no_grad():
             state_t = torch.FloatTensor(state).unsqueeze(0).to(self.device)
-            q_values = self.network(state_t)
+            q_values = self.network(state_t, head_idx=head_idx)
             return q_values.argmax(dim=1).item()
 
     def step(self, state, action, reward, next_state, done):
@@ -97,11 +104,11 @@ class DQNAgent:
         dones = torch.FloatTensor(dones).unsqueeze(1).to(self.device)
         
         # Q(s, a)
-        q_values = self.network(states).gather(1, actions)
+        q_values = self.network(states, head_idx=self.current_head).gather(1, actions)
         
         # Max Q(s', a')
         with torch.no_grad():
-            next_q_values = self.target_network(next_states).max(1, keepdim=True)[0]
+            next_q_values = self.target_network(next_states, head_idx=self.current_head).max(1, keepdim=True)[0]
             expected_q_values = rewards + (1 - dones) * self.gamma * next_q_values
             
         loss = nn.MSELoss()(q_values, expected_q_values)
@@ -126,7 +133,7 @@ class DQNAgent:
         states = torch.FloatTensor(states).to(self.device)
         
         with torch.no_grad():
-            _, activations = self.network(states, return_activations=True)
+            _, activations = self.network(states, return_activations=True, head_idx=self.current_head)
             
         dormant_indices, percentages = calculate_dormancy_scores(activations, dormancy_tau)
         
@@ -157,7 +164,7 @@ class DQNAgent:
         states = torch.FloatTensor(states).to(self.device)
         
         with torch.no_grad():
-            _, activations = self.network(states, return_activations=True)
+            _, activations = self.network(states, return_activations=True, head_idx=self.current_head)
             
         dormant_indices, percentages = calculate_dormancy_scores(activations, dormancy_tau)
         

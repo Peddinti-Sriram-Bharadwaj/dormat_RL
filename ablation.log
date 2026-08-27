@@ -1,0 +1,63 @@
+
+=========================================
+Testing Network Width: 64 (N=3 seeds)
+=========================================
+
+--- Seed 1/3 ---
+Seed 1 -> L1 Dorm: 40.6%, Base: 500.0, Final: -99.5, Recovery: 14.8
+
+--- Seed 2/3 ---
+Seed 2 -> L1 Dorm: 42.2%, Base: 500.0, Final: -103.1, Recovery: 12.8
+
+--- Seed 3/3 ---
+Seed 3 -> L1 Dorm: 42.2%, Base: 500.0, Final: -108.1, Recovery: 15.4
+
+=========================================
+Testing Network Width: 128 (N=3 seeds)
+=========================================
+
+--- Seed 1/3 ---
+Seed 1 -> L1 Dorm: 40.6%, Base: 500.0, Final: -103.5, Recovery: 16.4
+
+--- Seed 2/3 ---
+Seed 2 -> L1 Dorm: 50.0%, Base: 500.0, Final: -113.5, Recovery: 106.8
+
+--- Seed 3/3 ---
+Seed 3 -> L1 Dorm: 52.3%, Base: 500.0, Final: -134.2, Recovery: 33.8
+
+=========================================
+Testing Network Width: 256 (N=3 seeds)
+=========================================
+
+--- Seed 1/3 ---
+Seed 1 -> L1 Dorm: 53.9%, Base: 500.0, Final: -263.3, Recovery: 9.4
+
+--- Seed 2/3 ---
+Seed 2 -> L1 Dorm: 59.0%, Base: 311.3, Final: -93.1, Recovery: 32.0
+
+--- Seed 3/3 ---
+Seed 3 -> L1 Dorm: 56.6%, Base: 347.7, Final: -100.1, Recovery: 85.8
+
+=========================================
+Testing Network Width: 512 (N=3 seeds)
+=========================================
+
+--- Seed 1/3 ---
+Seed 1 -> L1 Dorm: 62.7%, Base: 121.4, Final: -106.4, Recovery: 11.6
+
+--- Seed 2/3 ---
+Seed 2 -> L1 Dorm: 60.7%, Base: 281.1, Final: -97.5, Recovery: 10.4
+
+--- Seed 3/3 ---
+Seed 3 -> L1 Dorm: 64.3%, Base: 128.3, Final: -83.5, Recovery: 13.0
+
+
+=========================================
+ABLATION STUDY RESULTS (Mean ± Std):
+Width | L1 Dormancy | Task A Base | Task B Final | Task A Recovered
+   64 |  41.7± 0.7% |  500.0± 0.0 | -103.6± 3.5 |    14.3±  1.1
+  128 |  47.7± 5.1% |  500.0± 0.0 | -117.1±12.8 |    52.3± 39.2
+  256 |  56.5± 2.1% |  386.3±81.7 | -152.2±78.6 |    42.4± 32.0
+  512 |  62.6± 1.4% |  176.9±73.7 |  -95.8± 9.4 |    11.7±  1.1
+=========================================
+
