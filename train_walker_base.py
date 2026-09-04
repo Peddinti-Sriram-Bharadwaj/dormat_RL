@@ -9,12 +9,16 @@ Gymnasium env already). No macro-command interface yet -- that's the
 next phase, once this base policy walks smoothly.
 """
 
+import os
+
 import gymnasium as gym
 import torch
 import numpy as np
 import random
 
 from core.sac_agent import SACAgent
+
+CHECKPOINT_PATH = "agents/walker_base_actor.pt"
 
 
 def set_seed(seed):
@@ -23,7 +27,7 @@ def set_seed(seed):
     torch.manual_seed(seed)
 
 
-def train(env_name="Walker2d-v5", seed=0, max_steps=300_000, warmup_steps=5_000, eval_every=20_000):
+def train(env_name="Walker2d-v5", seed=0, max_steps=1_000_000, warmup_steps=5_000, eval_every=20_000):
     set_seed(seed)
     env = gym.make(env_name)
     state_dim = env.observation_space.shape[0]
@@ -57,6 +61,8 @@ def train(env_name="Walker2d-v5", seed=0, max_steps=300_000, warmup_steps=5_000,
             eval_r, eval_jitter = evaluate(agent, env_name)
             print(f"  step {step:>7d} | episodes={len(ep_returns):>5d} | train mean20={mean_r:7.1f} "
                   f"| eval_return={eval_r:7.1f} | eval_action_jitter={eval_jitter:.4f}")
+            os.makedirs(os.path.dirname(CHECKPOINT_PATH), exist_ok=True)
+            torch.save(agent.actor.state_dict(), CHECKPOINT_PATH)
 
     env.close()
     return agent
