@@ -1,0 +1,67 @@
+
+=========================================
+Scaling to LunarLander-v3 with ZIR
+=========================================
+
+[Scaling] Training Phase 1: LunarLander-v3
+
+--- Starting Phase 1 on LunarLander-v3 ---
+Phase 1 | Step 1839 | Episode 20 | Reward -86.39647518849534 | Mean10 -214.3
+Phase 1 | Step 3637 | Episode 40 | Reward -62.54466647073621 | Mean10 -174.4
+Phase 1 | Step 5532 | Episode 60 | Reward -198.47971761675734 | Mean10 -172.9
+Phase 1 | Step 7627 | Episode 80 | Reward -185.76308429985062 | Mean10 -145.0
+Phase 1 | Step 9779 | Episode 100 | Reward -180.98525214923202 | Mean10 -120.1
+Phase 1 | Step 11851 | Episode 120 | Reward -119.90825205744324 | Mean10 -93.5
+Phase 1 | Step 13965 | Episode 140 | Reward -44.73436245856406 | Mean10 -101.1
+Phase 1 | Step 16161 | Episode 160 | Reward -268.8638250802055 | Mean10 -99.1
+Phase 1 | Step 18341 | Episode 180 | Reward -116.89065848421616 | Mean10 -85.7
+Phase 1 | Step 21176 | Episode 200 | Reward -138.93597066559315 | Mean10 -77.8
+Phase 1 | Step 23404 | Episode 220 | Reward -12.07782892175129 | Mean10 -80.4
+Phase 1 | Step 25617 | Episode 240 | Reward -86.55855222119729 | Mean10 -46.2
+Phase 1 | Step 28208 | Episode 260 | Reward -46.0983706445356 | Mean10 -58.8
+Phase 1 | Step 30457 | Episode 280 | Reward -87.82033612781754 | Mean10 -27.5
+Phase 1 | Step 32977 | Episode 300 | Reward -44.52816054059726 | Mean10 -5.7
+Phase 1 | Step 36008 | Episode 320 | Reward -146.4590147056831 | Mean10 -69.2
+Phase 1 | Step 39509 | Episode 340 | Reward -175.22726127707 | Mean10 -74.5
+Phase 1 | Step 45096 | Episode 360 | Reward -77.26921844069456 | Mean10 -37.8
+Phase 1 | Step 54186 | Episode 380 | Reward -120.54506498952387 | Mean10 -21.8
+Phase 1 | Step 64283 | Episode 400 | Reward 56.43281440436859 | Mean10 -47.4
+Phase 1 | Step 78507 | Episode 420 | Reward 18.478887216245955 | Mean10 -38.9
+Phase 1 | Step 98086 | Episode 440 | Reward 111.67553507156279 | Mean10 62.6
+Phase 1 | Step 116691 | Episode 460 | Reward 3.309936242198739 | Mean10 55.1
+Phase 1 | Step 133723 | Episode 480 | Reward 255.49169968999487 | Mean10 97.2
+[Phase 1] Converged at step 140348 with mean reward 206.6 >= 200.0
+Dormancy after LunarLander: [15.8203125, 74.21875]
+Evaluating Task A (LunarLander) before Phase 2...
+  > LunarLander Baseline: -5.2
+
+[Scaling] Training Phase 2: Acrobot-v1 with ZIR
+
+--- Starting Phase 2 (ZIR) on Acrobot-v1 ---
+Phase 2 (ZIR) | Step 7543 | Episode 20 | Reward -397.0 | Mean10 -311.9
+Phase 2 (ZIR) | Step 14950 | Episode 40 | Reward -500.0 | Mean10 -407.8
+Phase 2 (ZIR) | Step 22544 | Episode 60 | Reward -500.0 | Mean10 -358.5
+Phase 2 (ZIR) | Step 31977 | Episode 80 | Reward -500.0 | Mean10 -479.4
+Phase 2 (ZIR) | Step 41926 | Episode 100 | Reward -500.0 | Mean10 -499.5
+Phase 2 (ZIR) | Step 51902 | Episode 120 | Reward -500.0 | Mean10 -497.5
+Phase 2 (ZIR) | Step 61700 | Episode 140 | Reward -454.0 | Mean10 -485.0
+Phase 2 (ZIR) | Step 71525 | Episode 160 | Reward -453.0 | Mean10 -482.3
+Phase 2 (ZIR) | Step 80710 | Episode 180 | Reward -284.0 | Mean10 -458.3
+Phase 2 (ZIR) | Step 89386 | Episode 200 | Reward -251.0 | Mean10 -437.6
+Phase 2 (ZIR) | Step 97510 | Episode 220 | Reward -500.0 | Mean10 -439.1
+Phase 2 (ZIR) | Step 103786 | Episode 240 | Reward -246.0 | Mean10 -335.3
+Phase 2 (ZIR) | Step 108989 | Episode 260 | Reward -351.0 | Mean10 -254.6
+Phase 2 (ZIR) | Step 113689 | Episode 280 | Reward -223.0 | Mean10 -236.6
+Phase 2 (ZIR) | Step 118801 | Episode 300 | Reward -254.0 | Mean10 -256.9
+Phase 2 (ZIR) | Step 123815 | Episode 320 | Reward -161.0 | Mean10 -238.4
+Phase 2 (ZIR) | Step 130082 | Episode 340 | Reward -321.0 | Mean10 -303.0
+Phase 2 (ZIR) | Step 134947 | Episode 360 | Reward -287.0 | Mean10 -232.7
+Phase 2 (ZIR) | Step 140687 | Episode 380 | Reward -327.0 | Mean10 -325.3
+Phase 2 (ZIR) | Step 147056 | Episode 400 | Reward -348.0 | Mean10 -342.3
+Evaluating Task A (LunarLander) post Phase 2...
+
+--- FINAL SCALING RESULTS ---
+Phase 1 LunarLander Baseline: -5.2
+Phase 2 Acrobot Final:        -349.4
+Phase 1 LunarLander Recovery: -276.8
+

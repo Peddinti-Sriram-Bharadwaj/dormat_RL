@@ -1,0 +1,66 @@
+
+=======================================================
+Experiment 11: Activation Masking Validation
+Task A: CartPole-v1  |  Task B: Acrobot-v1
+Width: 256  |  Seeds: 5  |  Cores: 6
+=======================================================
+
+[Seed 2] Starting: CartPole-v1 -> Acrobot-v1
+  [Phase 1] Converged at step 71904 (episode 1091), mean10=425.9
+  [Seed 2] Phase 1 baseline (all neurons):    500.0
+  [Seed 2] Phase 1 baseline (nA only masked): 500.0
+  [Phase 2] Converged at step 67528 (episode 345), mean10=-99.6
+  [Seed 2] Post-Phase2 (all neurons):    9.2
+  [Seed 2] Post-Phase2 (nA only masked): 353.8
+  [Seed 2] Task B convergence: 67528 steps / 345 episodes
+
+[Seed 0] Starting: CartPole-v1 -> Acrobot-v1
+  [Phase 1] Converged at step 93303 (episode 1207), mean10=410.0
+  [Seed 0] Phase 1 baseline (all neurons):    197.2
+  [Seed 0] Phase 1 baseline (nA only masked): 197.7
+  [Phase 2] Converged at step 56089 (episode 281), mean10=-99.7
+  [Seed 0] Post-Phase2 (all neurons):    9.5
+  [Seed 0] Post-Phase2 (nA only masked): 11.1
+  [Seed 0] Task B convergence: 56089 steps / 281 episodes
+
+[Seed 4] Starting: CartPole-v1 -> Acrobot-v1
+  [Phase 1] Converged at step 94350 (episode 1264), mean10=411.1
+  [Seed 4] Phase 1 baseline (all neurons):    500.0
+  [Seed 4] Phase 1 baseline (nA only masked): 500.0
+  [Phase 2] Converged at step 70459 (episode 328), mean10=-99.4
+  [Seed 4] Post-Phase2 (all neurons):    19.8
+  [Seed 4] Post-Phase2 (nA only masked): 262.3
+  [Seed 4] Task B convergence: 70459 steps / 328 episodes
+
+[Seed 1] Starting: CartPole-v1 -> Acrobot-v1
+  [Phase 1] Converged at step 106862 (episode 1382), mean10=411.4
+  [Seed 1] Phase 1 baseline (all neurons):    500.0
+  [Seed 1] Phase 1 baseline (nA only masked): 500.0
+  [Phase 2] Converged at step 64553 (episode 336), mean10=-97.2
+  [Seed 1] Post-Phase2 (all neurons):    36.4
+  [Seed 1] Post-Phase2 (nA only masked): 171.8
+  [Seed 1] Task B convergence: 64553 steps / 336 episodes
+
+[Seed 3] Starting: CartPole-v1 -> Acrobot-v1
+  [Phase 1] Converged at step 123787 (episode 1308), mean10=412.9
+  [Seed 3] Phase 1 baseline (all neurons):    500.0
+  [Seed 3] Phase 1 baseline (nA only masked): 47.7
+  [Phase 2] Converged at step 56634 (episode 290), mean10=-99.3
+  [Seed 3] Post-Phase2 (all neurons):    28.8
+  [Seed 3] Post-Phase2 (nA only masked): 191.1
+  [Seed 3] Task B convergence: 56634 steps / 290 episodes
+
+=======================================================
+SUMMARY (N=5 seeds)
+=======================================================
+Phase 1 (CartPole-v1) convergence:   98041 steps / 1250 episodes
+Phase 2 (Acrobot-v1) convergence:   63053 steps / 316 episodes
+
+Task A baseline (all neurons):    439.4
+Task A baseline (nA masked only): 349.1
+
+Task A final (all neurons):       20.7 ± 10.7
+Task A final (nA masked only):    198.0 ± 113.2
+
+Results written to exp11_results.md
+

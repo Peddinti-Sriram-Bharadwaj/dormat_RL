@@ -1,0 +1,84 @@
+=================================================================
+ SAE PILOT EXPERIMENT
+ Env: CartPole-v1 | Width: 256 | Seed: 42
+ SAE: expansion=4x, k=32, epochs=200
+=================================================================
+
+[Phase 1] Training CartPole agent...
+  Converged at step 112228 (ep 1401), mean10=434.5
+
+[Collect] Sampling 10000 post-ReLU activations (layer=-1, dim=256)...
+  Collected: torch.Size([10000, 256])
+
+[Dormancy] Computing coordinate-basis dormancy scores...
+  Dormancy: ['18.4%', '56.2%'] | nDormant/layer: [47, 144]
+
+[SAE] Training: d=256 -> m=1024 | k=32 | N=10000 | epochs=200
+[SAE] Sparsity target: 32/1024 = 3.1% active per sample
+  Epoch   1 | loss=4.0697 | recon=2.3848 | dead_latents=78.5% | mean_L0=32.0
+  Epoch  10 | loss=0.6833 | recon=0.0710 | dead_latents=92.9% | mean_L0=32.0
+  Epoch  20 | loss=0.6314 | recon=0.0280 | dead_latents=89.3% | mean_L0=32.0
+  Epoch  30 | loss=0.7468 | recon=0.0147 | dead_latents=89.0% | mean_L0=32.0
+  Epoch  40 | loss=0.8847 | recon=0.0093 | dead_latents=88.5% | mean_L0=32.0
+  Epoch  50 | loss=1.0164 | recon=0.0070 | dead_latents=88.7% | mean_L0=32.0
+  Epoch  60 | loss=1.1075 | recon=0.0058 | dead_latents=89.1% | mean_L0=32.0
+  Epoch  70 | loss=1.1584 | recon=0.0051 | dead_latents=90.2% | mean_L0=32.0
+  Epoch  80 | loss=1.2019 | recon=0.0046 | dead_latents=90.7% | mean_L0=32.0
+  Epoch  90 | loss=1.2454 | recon=0.0040 | dead_latents=91.4% | mean_L0=32.0
+  Epoch 100 | loss=1.2812 | recon=0.0036 | dead_latents=90.8% | mean_L0=32.0
+  Epoch 110 | loss=1.3065 | recon=0.0033 | dead_latents=91.2% | mean_L0=32.0
+  Epoch 120 | loss=1.3316 | recon=0.0031 | dead_latents=90.8% | mean_L0=32.0
+  Epoch 130 | loss=1.3342 | recon=0.0029 | dead_latents=91.0% | mean_L0=32.0
+  Epoch 140 | loss=1.3502 | recon=0.0028 | dead_latents=91.1% | mean_L0=32.0
+  Epoch 150 | loss=1.3468 | recon=0.0027 | dead_latents=91.1% | mean_L0=32.0
+  Epoch 160 | loss=1.3575 | recon=0.0027 | dead_latents=90.9% | mean_L0=32.0
+  Epoch 170 | loss=1.3533 | recon=0.0027 | dead_latents=90.9% | mean_L0=32.0
+  Epoch 180 | loss=1.3510 | recon=0.0026 | dead_latents=90.9% | mean_L0=32.0
+  Epoch 190 | loss=1.3515 | recon=0.0026 | dead_latents=91.0% | mean_L0=32.0
+  Epoch 200 | loss=1.3559 | recon=0.0026 | dead_latents=91.0% | mean_L0=32.0
+
+[SAE] Identifying dead latents on Task A activation distribution...
+  Dead latents (<0.1% fire rate): 946/1024 (92.4%)
+  Live latents: 78/1024 (7.6%)
+  Fire rate stats: min=0.0000, mean=0.0312, max=1.0000
+  SAE Recon MSE: 0.0026 | Cosine sim: 0.9990
+
+[Eval] Running 20-episode evaluation under 3 conditions...
+  [A] Baseline (all neurons):      163.1 +/- 27.7
+  [B] Coord-basis dormant masked:  162.3 +/- 19.6  (drop=+0.7)
+  [C] SAE feature masked:          190.1 +/- 72.3  (drop=-27.0)
+  [D] SAE passthrough (no mask):   182.5 +/- 35.5  (drop=-19.4)
+
+=================================================================
+ RESULTS SUMMARY
+=================================================================
+Condition                               Mean      Std     Drop
+-----------------------------------------------------------------
+[A] All neurons (baseline)             163.1     27.7       --
+[B] Coord-basis (dormant masked)       162.3     19.6     +0.7
+[C] SAE feature masked                 190.1     72.3    -27.0
+[D] SAE passthrough (no mask)          182.5     35.5    -19.4
+=================================================================
+
+[Drop Decomposition]
+  drop([C] SAE masked)     = -27.0
+  drop([D] passthrough)    = -19.4  <- pure reconstruction noise
+  masking_cost             = -7.6  <- extra cost from zeroing dead latents
+
+  => Masking cost is NEGLIGIBLE. The dead latents genuinely carry no
+     useful task information. SAE masking is principled -- the drop
+     is driven by reconstruction noise, not incorrect feature removal.
+
+  => Coord-basis masking is BETTER than even pure SAE passthrough.
+     This means the reconstruction noise from the SAE is the primary
+     bottleneck. The SAE approach needs better reconstruction fidelity
+     before it can beat the simple coordinate-basis approach.
+
+[Interpretation]
+  XX Coord-basis masking is surprisingly better (26.3 pts).
+  XX Possible causes: SAE reconstruction error corrupts Q-value decisions,
+     or dormant neurons truly carry near-zero distributed activation mass.
+
+  SAE stats: 946/1024 dead latents (92.4%) vs 144/256 dead neurons (56.2%)
+  SAE reconstruction quality: MSE=0.0026, cos_sim=0.9990
+=================================================================

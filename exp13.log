@@ -1,0 +1,45 @@
+
+============================================================
+Experiment 13: Width-Varied Activation Masking
+Task A: CartPole-v1 → Task B: Acrobot-v1
+Widths: [64, 128, 256, 512] | Seeds: 5 | Cores: 6
+============================================================
+  [W=64|S4] Dormancy=35.9% | Base(all=500 masked=500) | Final(all=9 masked=500)
+  [W=128|S2] Dormancy=35.5% | Base(all=113 masked=110) | Final(all=11 masked=91)
+  [W=256|S3] Dormancy=41.4% | Base(all=141 masked=126) | Final(all=65 masked=100)
+  [W=64|S2] Dormancy=32.8% | Base(all=500 masked=500) | Final(all=10 masked=109)
+  [W=256|S0] Dormancy=31.6% | Base(all=256 masked=246) | Final(all=31 masked=131)
+  [W=512|S1] Dormancy=45.4% | Base(all=500 masked=299) | Final(all=17 masked=383)
+  [W=64|S3] Dormancy=28.1% | Base(all=500 masked=500) | Final(all=10 masked=500)
+  [W=256|S1] Dormancy=40.2% | Base(all=226 masked=498) | Final(all=21 masked=113)
+  [W=512|S2] Dormancy=50.7% | Base(all=130 masked=134) | Final(all=10 masked=91)
+  [W=64|S0] Dormancy=28.9% | Base(all=359 masked=354) | Final(all=10 masked=209)
+  [W=128|S3] Dormancy=33.6% | Base(all=437 masked=338) | Final(all=11 masked=210)
+  [W=512|S0] Dormancy=49.0% | Base(all=500 masked=500) | Final(all=110 masked=47)
+  [W=64|S1] Dormancy=25.8% | Base(all=500 masked=500) | Final(all=10 masked=265)
+  [W=128|S1] Dormancy=32.0% | Base(all=371 masked=203) | Final(all=113 masked=108)
+  [W=256|S2] Dormancy=39.8% | Base(all=500 masked=231) | Final(all=9 masked=11)
+  [W=512|S3] Dormancy=53.9% | Base(all=224 masked=212) | Final(all=9 masked=38)
+  [W=128|S0] Dormancy=31.2% | Base(all=133 masked=130) | Final(all=9 masked=500)
+  [W=128|S4] Dormancy=30.1% | Base(all=492 masked=494) | Final(all=26 masked=15)
+  [W=256|S4] Dormancy=34.0% | Base(all=500 masked=500) | Final(all=17 masked=98)
+  [W=512|S4] Dormancy=46.1% | Base(all=475 masked=179) | Final(all=9 masked=9)
+
+============================================================
+SUMMARY
+============================================================
+Width=64: nB%=30.3% | P1=143057st/786ep | P2=89269st/463ep
+  Baseline: all=471.8 masked=470.7
+  Final:    all=9.6±0.2  masked=316.6±157.9
+Width=128: nB%=32.5% | P1=107360st/1272ep | P2=68433st/343ep
+  Baseline: all=309.4 masked=254.9
+  Final:    all=34.1±40.1  masked=185.0±169.4
+Width=256: nB%=37.4% | P1=101339st/1385ep | P2=55278st/279ep
+  Baseline: all=324.5 masked=320.2
+  Final:    all=28.7±19.5  masked=90.6±41.8
+Width=512: nB%=49.0% | P1=142197st/307ep | P2=52163st/281ep
+  Baseline: all=365.8 masked=264.8
+  Final:    all=31.2±39.7  masked=113.5±137.3
+
+Results written to exp13_results.md
+

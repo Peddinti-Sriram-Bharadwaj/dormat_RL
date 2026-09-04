@@ -1,0 +1,46 @@
+[Phase 1] Training CartPole agent (single hidden layer, width=256)...
+[Dormancy] 13.7% dormant (2/256 neurons)
+
+======================================================================
+ CIRCUIT DISCOVERY: CartPole push-left vs push-right decision
+======================================================================
+
+--- State 1: pos=-0.47 vel=-0.41 angle=-0.032 angvel=+0.06 | Q(L)=74.21 Q(R)=74.30 -> chosen=RIGHT ---
+  DLA sanity check: sum(neuron effects)+bias = 0.0937 vs true Q-gap = 0.0937 (should match exactly)
+  Top 8 neurons pushing RIGHT: [184, 214, 82, 213, 17, 154, 118, 254]
+  Top 8 neurons pushing LEFT:  [236, 91, 23, 31, 46, 79, 12, 162]
+  Overlap with dormant-neuron set: none
+  [Ablation] Zeroing top-8 circuit neurons -> new Q-gap = -3.404 (was +0.094) -> decision FLIPPED
+  [Control]  Zeroing 8 random other neurons -> new Q-gap = +0.233 (should stay close to +0.094)
+
+--- State 2: pos=-0.48 vel=-0.22 angle=-0.031 angvel=-0.25 | Q(L)=74.02 Q(R)=73.83 -> chosen=LEFT ---
+  DLA sanity check: sum(neuron effects)+bias = -0.1948 vs true Q-gap = -0.1948 (should match exactly)
+  Top 8 neurons pushing RIGHT: [184, 82, 214, 17, 213, 254, 78, 215]
+  Top 8 neurons pushing LEFT:  [236, 91, 23, 31, 46, 79, 152, 12]
+  Overlap with dormant-neuron set: none
+  [Ablation] Zeroing top-8 circuit neurons -> new Q-gap = +4.313 (was -0.195) -> decision FLIPPED
+  [Control]  Zeroing 8 random other neurons -> new Q-gap = +0.347 (should stay close to -0.195)
+
+--- State 3: pos=-0.48 vel=-0.41 angle=-0.035 angvel=+0.04 | Q(L)=73.61 Q(R)=73.62 -> chosen=RIGHT ---
+  DLA sanity check: sum(neuron effects)+bias = 0.0104 vs true Q-gap = 0.0104 (should match exactly)
+  Top 8 neurons pushing RIGHT: [184, 214, 82, 213, 17, 154, 254, 118]
+  Top 8 neurons pushing LEFT:  [236, 91, 23, 31, 46, 79, 12, 162]
+  Overlap with dormant-neuron set: none
+  [Ablation] Zeroing top-8 circuit neurons -> new Q-gap = -3.465 (was +0.010) -> decision FLIPPED
+  [Control]  Zeroing 8 random other neurons -> new Q-gap = +0.161 (should stay close to +0.010)
+
+--- State 4: pos=-0.49 vel=-0.22 angle=-0.035 angvel=-0.27 | Q(L)=73.35 Q(R)=73.09 -> chosen=LEFT ---
+  DLA sanity check: sum(neuron effects)+bias = -0.2598 vs true Q-gap = -0.2598 (should match exactly)
+  Top 8 neurons pushing RIGHT: [184, 82, 214, 17, 213, 254, 78, 215]
+  Top 8 neurons pushing LEFT:  [236, 91, 23, 31, 46, 79, 152, 255]
+  Overlap with dormant-neuron set: none
+  [Ablation] Zeroing top-8 circuit neurons -> new Q-gap = +4.303 (was -0.260) -> decision FLIPPED
+  [Control]  Zeroing 8 random other neurons -> new Q-gap = -1.012 (should stay close to -0.260)
+
+--- State 5: pos=-0.49 vel=-0.41 angle=-0.040 angvel=+0.01 | Q(L)=72.98 Q(R)=72.89 -> chosen=LEFT ---
+  DLA sanity check: sum(neuron effects)+bias = -0.0932 vs true Q-gap = -0.0932 (should match exactly)
+  Top 8 neurons pushing RIGHT: [184, 214, 82, 213, 17, 154, 254, 118]
+  Top 8 neurons pushing LEFT:  [236, 91, 23, 31, 46, 79, 162, 12]
+  Overlap with dormant-neuron set: none
+  [Ablation] Zeroing top-8 circuit neurons -> new Q-gap = +4.118 (was -0.093) -> decision FLIPPED
+  [Control]  Zeroing 8 random other neurons -> new Q-gap = +0.426 (should stay close to -0.093)

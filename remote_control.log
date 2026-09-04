@@ -1,0 +1,18 @@
+[Phase 1] Training CartPole agent...
+
+[Phase 2] Discovering the push-left/push-right circuit...
+[Circuit] RIGHT-neurons: [214, 136, 184, 145, 244, 118, 68, 82]
+[Circuit] LEFT-neurons:  [91, 23, 46, 236, 79, 12, 174, 152]
+
+[Phase 3] Testing remote control via neuron clamping...
+
+[Command-Following Test]
+  Forced-LEFT obeyed:  100/100  (100.0%)
+  Forced-RIGHT obeyed: 100/100 (100.0%)
+  Un-clamped baseline happened to match the alternating command by chance: 79/200 (39.5%)
+
+[Live Remote-Controlled Episode] alternating command every 15 steps
+  Episode ended at step 9 (pole fell / out of bounds) -- expected under forced control since it ignores real state.
+  Commanded sequence: RRRRRRRRR
+  Actual action seq:  RRRRRRRRR
+  Obedience rate: 9/9 (100.0%)

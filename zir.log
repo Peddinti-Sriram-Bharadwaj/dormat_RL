@@ -1,0 +1,21 @@
+
+=========================================
+Testing ZIR (Zero-Interference Routing) on Width 256 using 6 cores
+=========================================
+
+--- Seed 3 ---
+
+--- Seed 0 ---
+
+--- Seed 1 ---
+
+--- Seed 2 ---
+
+--- Seed 4 ---
+
+--- SUMMARY FOR WIDTH 256 (ZIR VALIDATION) ---
+Standard Separate Head Recovery: 42.1 ± 63.8
+ZIR Head Recovery:               32.3 ± 28.9
+--------------------------------------------------
+
+

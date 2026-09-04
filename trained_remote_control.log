@@ -1,0 +1,56 @@
+[Phase 1] Training the base CartPole agent (to be remote-controlled)...
+
+[Phase 2] Finding the push-left/push-right circuit in the base agent...
+[Circuit] RIGHT-neurons: [214, 136, 184, 145, 244, 118, 68, 82]
+[Circuit] LEFT-neurons:  [91, 23, 46, 236, 79, 12, 174, 152]
+
+[Phase 3] Training the CONTROLLER (a separate model) to remote-control it...
+  step   12210 | ep   100 | train mean50=   23.3 | eval: survival=100.0% mean_dist=0.872 auto=11% | epsilon=0.543
+  step   31503 | ep   200 | train mean50=  108.7 | eval: survival= 95.0% mean_dist=0.960 auto=47% | epsilon=0.207
+  step   51432 | ep   300 | train mean50=  102.2 | eval: survival=100.0% mean_dist=1.226 auto=35% | epsilon=0.076
+  step   71432 | ep   400 | train mean50=   67.9 | eval: survival=100.0% mean_dist=1.221 auto=42% | epsilon=0.030
+  step   91415 | ep   500 | train mean50=  100.4 | eval: survival=100.0% mean_dist=1.098 auto=79% | epsilon=0.030
+  step  111415 | ep   600 | train mean50=  126.9 | eval: survival= 85.0% mean_dist=1.191 auto=27% | epsilon=0.030
+  step  131412 | ep   700 | train mean50=  130.0 | eval: survival=100.0% mean_dist=0.564 auto=68% | epsilon=0.030
+  step  151125 | ep   800 | train mean50=  117.7 | eval: survival= 90.0% mean_dist=0.688 auto=14% | epsilon=0.030
+  step  169986 | ep   900 | train mean50=   60.5 | eval: survival= 50.0% mean_dist=1.153 auto=45% | epsilon=0.030
+  step  188825 | ep  1000 | train mean50=  107.7 | eval: survival=100.0% mean_dist=0.710 auto=39% | epsilon=0.030
+  step  208646 | ep  1100 | train mean50=  125.8 | eval: survival=100.0% mean_dist=0.391 auto=28% | epsilon=0.030
+  step  228579 | ep  1200 | train mean50=  129.7 | eval: survival= 95.0% mean_dist=0.495 auto=54% | epsilon=0.030
+  step  248576 | ep  1300 | train mean50=  135.8 | eval: survival=100.0% mean_dist=0.315 auto=13% | epsilon=0.030
+  -> reached target performance (survival>=90%, dist<=0.35); stopping early.
+  Restored best checkpoint (composite score=0.937).
+
+[Evaluation] goal-conditioned control (target cart position)
+  ep00 target_x=+0.68 | steps=200 | final|x-target|=0.26 | crashed=False | AUTO used 12% of steps
+  ep01 target_x=-1.65 | steps=138 | final|x-target|=0.57 | crashed=True | AUTO used 14% of steps
+  ep02 target_x=+0.05 | steps=200 | final|x-target|=0.07 | crashed=False | AUTO used 0% of steps
+  ep03 target_x=+0.17 | steps=200 | final|x-target|=0.09 | crashed=False | AUTO used 0% of steps
+  ep04 target_x=-0.58 | steps=200 | final|x-target|=0.04 | crashed=False | AUTO used 6% of steps
+  ep05 target_x=-1.55 | steps=200 | final|x-target|=0.38 | crashed=False | AUTO used 22% of steps
+  ep06 target_x=-0.98 | steps=200 | final|x-target|=0.01 | crashed=False | AUTO used 2% of steps
+  ep07 target_x=-0.51 | steps=200 | final|x-target|=0.03 | crashed=False | AUTO used 24% of steps
+  ep08 target_x=-0.23 | steps=200 | final|x-target|=0.03 | crashed=False | AUTO used 18% of steps
+  ep09 target_x=+0.33 | steps=200 | final|x-target|=0.05 | crashed=False | AUTO used 4% of steps
+  ep10 target_x=+0.80 | steps=200 | final|x-target|=0.57 | crashed=False | AUTO used 26% of steps
+  ep11 target_x=-0.66 | steps=200 | final|x-target|=0.07 | crashed=False | AUTO used 2% of steps
+  ep12 target_x=-0.62 | steps=200 | final|x-target|=0.06 | crashed=False | AUTO used 5% of steps
+  ep13 target_x=-1.73 | steps=200 | final|x-target|=0.33 | crashed=False | AUTO used 28% of steps
+  ep14 target_x=-1.65 | steps=158 | final|x-target|=0.66 | crashed=True | AUTO used 13% of steps
+  ep15 target_x=-0.87 | steps=200 | final|x-target|=0.03 | crashed=False | AUTO used 2% of steps
+  ep16 target_x=+0.86 | steps=200 | final|x-target|=0.67 | crashed=False | AUTO used 26% of steps
+  ep17 target_x=+0.46 | steps=200 | final|x-target|=0.05 | crashed=False | AUTO used 4% of steps
+  ep18 target_x=+0.97 | steps=200 | final|x-target|=0.75 | crashed=False | AUTO used 36% of steps
+  ep19 target_x=+0.97 | steps=200 | final|x-target|=0.75 | crashed=False | AUTO used 30% of steps
+  ep20 target_x=+1.28 | steps=200 | final|x-target|=0.64 | crashed=False | AUTO used 11% of steps
+  ep21 target_x=+0.79 | steps=200 | final|x-target|=0.49 | crashed=False | AUTO used 19% of steps
+  ep22 target_x=+1.72 | steps=200 | final|x-target|=0.34 | crashed=False | AUTO used 13% of steps
+  ep23 target_x=+1.44 | steps=200 | final|x-target|=0.54 | crashed=False | AUTO used 17% of steps
+  ep24 target_x=+0.31 | steps=200 | final|x-target|=0.04 | crashed=False | AUTO used 8% of steps
+  ep25 target_x=+0.32 | steps=200 | final|x-target|=0.05 | crashed=False | AUTO used 8% of steps
+  ep26 target_x=-1.68 | steps=200 | final|x-target|=1.33 | crashed=False | AUTO used 8% of steps
+  ep27 target_x=+1.79 | steps=200 | final|x-target|=0.40 | crashed=False | AUTO used 10% of steps
+  ep28 target_x=-1.33 | steps=200 | final|x-target|=0.15 | crashed=False | AUTO used 10% of steps
+  ep29 target_x=+0.87 | steps=200 | final|x-target|=0.67 | crashed=False | AUTO used 28% of steps
+
+  SUMMARY over 30 episodes: survival rate = 28/30 (93.3%), mean final |x-target| = 0.338

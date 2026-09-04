@@ -9,8 +9,12 @@ from core.env_wrapper import PadEnvWrapper
 from train_width_ablation import train_phase, evaluate_agent, get_threshold
 
 import multiprocessing as mp
+import os
 
 def run_single_seed(seed, width, env_a, env_b, thresh_a, thresh_b):
+    # Prevent PyTorch from hanging CPUs in multiprocessing
+    torch.set_num_threads(1)
+    
     print(f"\n--- Seed {seed} ---")
     torch.manual_seed(seed)
     np.random.seed(seed)
@@ -115,6 +119,7 @@ def run_zir_experiment(width, num_seeds=5, num_cores=6):
     return sep_recov, zir_recov
 
 def main():
+    mp.set_start_method('spawn', force=True)
     width = 256
     # You have 8 cores, using all but 2 = 6 cores
     sep, zir = run_zir_experiment(width, num_seeds=5, num_cores=6)

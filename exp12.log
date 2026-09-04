@@ -1,0 +1,153 @@
+
+============================================================
+Experiment 12: Width-Varied Speed Grid
+Widths: [64, 128, 256, 512] | Pairs: 6 | Seeds: 5
+Total tasks: 120 | Cores: 6
+============================================================
+  [W=64|Cart->Moun|S0] Recycled=12400 Scratch=29600
+  [W=64|Cart->Moun|S1] Recycled=26000 Scratch=14400
+  [W=64|Cart->Moun|S2] Recycled=7200 Scratch=16800
+  [W=64|Cart->Moun|S3] Recycled=150000 Scratch=10000
+  [W=64|Cart->Moun|S4] Recycled=7600 Scratch=25600
+  [W=128|Acro->Cart|S0] Recycled=150000 Scratch=114059
+  [W=128|Acro->Cart|S1] Recycled=150000 Scratch=110667
+  [W=128|Acro->Cart|S2] Recycled=113805 Scratch=110577
+  [W=128|Acro->Cart|S3] Recycled=150000 Scratch=97257
+  [W=128|Acro->Cart|S4] Recycled=150000 Scratch=107204
+  [W=256|Moun->Acro|S0] Recycled=60672 Scratch=58193
+  [W=256|Moun->Acro|S1] Recycled=45467 Scratch=56916
+  [W=256|Moun->Acro|S2] Recycled=61507 Scratch=66170
+  [W=256|Moun->Acro|S3] Recycled=45967 Scratch=54304
+  [W=256|Moun->Acro|S4] Recycled=56450 Scratch=55206
+  [W=512|Acro->Moun|S0] Recycled=6400 Scratch=8000
+  [W=512|Acro->Moun|S1] Recycled=4000 Scratch=6800
+  [W=512|Acro->Moun|S2] Recycled=6800 Scratch=6800
+  [W=512|Acro->Moun|S3] Recycled=7800 Scratch=7200
+  [W=512|Acro->Moun|S4] Recycled=5800 Scratch=5600
+  [W=64|Cart->Acro|S0] Recycled=72602 Scratch=57606
+  [W=64|Cart->Acro|S1] Recycled=77486 Scratch=69088
+  [W=64|Cart->Acro|S2] Recycled=64092 Scratch=70522
+  [W=64|Cart->Acro|S3] Recycled=88101 Scratch=62924
+  [W=64|Cart->Acro|S4] Recycled=62340 Scratch=61590
+  [W=128|Moun->Cart|S0] Recycled=138985 Scratch=122475
+  [W=128|Moun->Cart|S1] Recycled=150000 Scratch=102365
+  [W=128|Moun->Cart|S2] Recycled=150000 Scratch=124423
+  [W=128|Moun->Cart|S3] Recycled=141919 Scratch=103063
+  [W=128|Moun->Cart|S4] Recycled=150000 Scratch=108418
+  [W=512|Cart->Moun|S0] Recycled=3400 Scratch=7800
+  [W=512|Cart->Moun|S1] Recycled=7200 Scratch=8000
+  [W=512|Cart->Moun|S2] Recycled=4400 Scratch=8200
+  [W=512|Cart->Moun|S3] Recycled=3200 Scratch=6000
+  [W=512|Cart->Moun|S4] Recycled=6000 Scratch=6800
+  [W=64|Moun->Acro|S0] Recycled=51676 Scratch=52280
+  [W=64|Moun->Acro|S1] Recycled=63046 Scratch=61738
+  [W=64|Moun->Acro|S2] Recycled=95051 Scratch=62835
+  [W=64|Moun->Acro|S3] Recycled=66786 Scratch=70148
+  [W=64|Moun->Acro|S4] Recycled=56691 Scratch=59067
+  [W=128|Cart->Moun|S0] Recycled=12000 Scratch=9800
+  [W=128|Cart->Moun|S1] Recycled=25200 Scratch=10800
+  [W=128|Cart->Moun|S2] Recycled=11400 Scratch=13800
+  [W=128|Cart->Moun|S3] Recycled=8600 Scratch=18400
+  [W=128|Cart->Moun|S4] Recycled=11200 Scratch=15800
+  [W=128|Moun->Acro|S0] Recycled=52671 Scratch=62251
+  [W=128|Moun->Acro|S1] Recycled=39967 Scratch=52930
+  [W=128|Moun->Acro|S2] Recycled=40117 Scratch=52157
+  [W=128|Moun->Acro|S3] Recycled=59113 Scratch=64435
+  [W=128|Moun->Acro|S4] Recycled=49795 Scratch=60966
+  [W=256|Acro->Moun|S0] Recycled=5000 Scratch=10200
+  [W=256|Acro->Moun|S1] Recycled=16200 Scratch=13200
+  [W=256|Acro->Moun|S2] Recycled=9800 Scratch=9800
+  [W=256|Acro->Moun|S3] Recycled=10400 Scratch=10200
+  [W=256|Acro->Moun|S4] Recycled=7000 Scratch=6000
+  [W=512|Cart->Acro|S0] Recycled=52456 Scratch=57684
+  [W=512|Cart->Acro|S1] Recycled=54182 Scratch=57568
+  [W=512|Cart->Acro|S2] Recycled=53247 Scratch=56809
+  [W=512|Cart->Acro|S3] Recycled=52543 Scratch=59103
+  [W=512|Cart->Acro|S4] Recycled=57335 Scratch=56548
+  [W=64|Acro->Cart|S0] Recycled=150000 Scratch=120041
+  [W=64|Acro->Cart|S1] Recycled=150000 Scratch=127141
+  [W=64|Acro->Cart|S2] Recycled=150000 Scratch=139224
+  [W=64|Acro->Cart|S3] Recycled=150000 Scratch=150000
+  [W=64|Acro->Cart|S4] Recycled=150000 Scratch=145407
+  [W=256|Cart->Moun|S0] Recycled=5600 Scratch=8200
+  [W=256|Cart->Moun|S1] Recycled=14600 Scratch=8200
+  [W=256|Cart->Moun|S2] Recycled=4000 Scratch=10000
+  [W=256|Cart->Moun|S3] Recycled=7400 Scratch=11800
+  [W=256|Cart->Moun|S4] Recycled=6600 Scratch=9000
+  [W=256|Moun->Cart|S0] Recycled=150000 Scratch=83497
+  [W=256|Moun->Cart|S1] Recycled=101477 Scratch=97525
+  [W=256|Moun->Cart|S2] Recycled=79133 Scratch=95437
+  [W=256|Moun->Cart|S3] Recycled=117076 Scratch=98785
+  [W=256|Moun->Cart|S4] Recycled=108702 Scratch=81900
+  [W=512|Moun->Acro|S0] Recycled=54585 Scratch=67216
+  [W=512|Moun->Acro|S1] Recycled=49149 Scratch=56298
+  [W=512|Moun->Acro|S2] Recycled=48586 Scratch=61040
+  [W=512|Moun->Acro|S3] Recycled=50592 Scratch=54898
+  [W=512|Moun->Acro|S4] Recycled=48322 Scratch=58678
+  [W=64|Moun->Cart|S0] Recycled=150000 Scratch=115999
+  [W=64|Moun->Cart|S1] Recycled=21860 Scratch=120258
+  [W=64|Moun->Cart|S2] Recycled=150000 Scratch=150000
+  [W=64|Moun->Cart|S3] Recycled=76283 Scratch=150000
+  [W=64|Moun->Cart|S4] Recycled=21078 Scratch=145545
+  [W=128|Acro->Moun|S0] Recycled=13800 Scratch=16800
+  [W=128|Acro->Moun|S1] Recycled=6000 Scratch=11400
+  [W=128|Acro->Moun|S2] Recycled=30400 Scratch=13400
+  [W=128|Acro->Moun|S3] Recycled=28400 Scratch=15400
+  [W=128|Acro->Moun|S4] Recycled=9200 Scratch=14000
+  [W=256|Cart->Acro|S0] Recycled=48427 Scratch=56627
+  [W=256|Cart->Acro|S1] Recycled=72405 Scratch=54061
+  [W=256|Cart->Acro|S2] Recycled=53824 Scratch=62372
+  [W=256|Cart->Acro|S3] Recycled=49832 Scratch=54693
+  [W=256|Cart->Acro|S4] Recycled=63350 Scratch=60848
+  [W=512|Acro->Cart|S0] Recycled=150000 Scratch=84810
+  [W=512|Acro->Cart|S1] Recycled=150000 Scratch=150000
+  [W=512|Acro->Cart|S2] Recycled=134581 Scratch=113644
+  [W=512|Acro->Cart|S3] Recycled=150000 Scratch=99366
+  [W=512|Acro->Cart|S4] Recycled=150000 Scratch=150000
+  [W=64|Acro->Moun|S0] Recycled=150000 Scratch=21000
+  [W=64|Acro->Moun|S1] Recycled=40200 Scratch=15800
+  [W=64|Acro->Moun|S2] Recycled=35400 Scratch=16400
+  [W=64|Acro->Moun|S3] Recycled=83000 Scratch=22400
+  [W=64|Acro->Moun|S4] Recycled=32000 Scratch=16800
+  [W=128|Cart->Acro|S0] Recycled=63915 Scratch=60113
+  [W=128|Cart->Acro|S1] Recycled=58093 Scratch=57830
+  [W=128|Cart->Acro|S2] Recycled=46019 Scratch=58019
+  [W=128|Cart->Acro|S3] Recycled=53701 Scratch=55412
+  [W=128|Cart->Acro|S4] Recycled=53536 Scratch=50804
+  [W=256|Acro->Cart|S0] Recycled=118936 Scratch=110485
+  [W=256|Acro->Cart|S1] Recycled=150000 Scratch=114930
+  [W=256|Acro->Cart|S2] Recycled=112427 Scratch=59816
+  [W=256|Acro->Cart|S3] Recycled=15239 Scratch=107371
+  [W=256|Acro->Cart|S4] Recycled=139919 Scratch=77813
+  [W=512|Moun->Cart|S0] Recycled=95237 Scratch=150000
+  [W=512|Moun->Cart|S1] Recycled=117340 Scratch=109956
+  [W=512|Moun->Cart|S2] Recycled=126615 Scratch=150000
+  [W=512|Moun->Cart|S3] Recycled=99757 Scratch=119835
+  [W=512|Moun->Cart|S4] Recycled=106972 Scratch=91018
+W=64 | Cart->Acro | Rec=72924±9394 | Scr=64346±4810 | Δ=-8578
+W=64 | Cart->Moun | Rec=40640±55102 | Scr=19280±7246 | Δ=-21360
+W=64 | Acro->Cart | Rec=150000±0 | Scr=136363±11202 | Δ=-13637
+W=64 | Acro->Moun | Rec=68120±44901 | Scr=18480±2685 | Δ=-49640
+W=64 | Moun->Cart | Rec=83844±57606 | Scr=136360±15035 | Δ=52516
+W=64 | Moun->Acro | Rec=66650±15120 | Scr=61214±5782 | Δ=-5436
+W=128 | Cart->Acro | Rec=55053±5891 | Scr=56436±3186 | Δ=1383
+W=128 | Cart->Moun | Rec=13680±5877 | Scr=13720±3166 | Δ=40
+W=128 | Acro->Cart | Rec=142761±14478 | Scr=107953±5771 | Δ=-34808
+W=128 | Acro->Moun | Rec=17560±10000 | Scr=14200±1829 | Δ=-3360
+W=128 | Moun->Cart | Rec=146181±4769 | Scr=112149±9481 | Δ=-34032
+W=128 | Moun->Acro | Rec=48333±7412 | Scr=58548±5032 | Δ=10215
+W=256 | Cart->Acro | Rec=57568±9066 | Scr=57720±3322 | Δ=153
+W=256 | Cart->Moun | Rec=7640±3660 | Scr=9440±1353 | Δ=1800
+W=256 | Acro->Cart | Rec=107304±48009 | Scr=94083±21537 | Δ=-13221
+W=256 | Acro->Moun | Rec=9680±3798 | Scr=9880±2293 | Δ=200
+W=256 | Moun->Cart | Rec=111278±23104 | Scr=91429±7226 | Δ=-19849
+W=256 | Moun->Acro | Rec=54013±6989 | Scr=58158±4226 | Δ=4145
+W=512 | Cart->Acro | Rec=53953±1801 | Scr=57542±893 | Δ=3590
+W=512 | Cart->Moun | Rec=4840±1541 | Scr=7360±833 | Δ=2520
+W=512 | Acro->Cart | Rec=146916±6168 | Scr=119564±26471 | Δ=-27352
+W=512 | Acro->Moun | Rec=6160±1261 | Scr=6880±776 | Δ=720
+W=512 | Moun->Cart | Rec=109184±11477 | Scr=124162±23040 | Δ=14978
+W=512 | Moun->Acro | Rec=50247±2307 | Scr=59626±4334 | Δ=9379
+
+Results written to exp12_results.md
+
